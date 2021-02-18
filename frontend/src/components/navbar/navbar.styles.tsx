@@ -4,6 +4,7 @@ export const Nav = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
+  height: 70px;
   justify-content: space-between;
   padding: 10px 1em;
   background: #ffffff;
