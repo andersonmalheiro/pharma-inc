@@ -2,13 +2,15 @@ import { AxiosInstance } from 'axios';
 import { User, ResponseModel } from './models';
 import { dateFormatter } from 'utils/date-format';
 
-interface UserFilters {
-  gender?: 'male' | 'female';
+export interface UserFilters {
+  gender?: 'male' | 'female' | undefined;
   nat?: string;
   page?: number;
   results?: number;
   inc?: string[];
   exc?: string[];
+  name?: string;
+  seed?: string;
 }
 
 export class UserService {
