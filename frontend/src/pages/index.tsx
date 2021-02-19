@@ -1,46 +1,35 @@
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { Navbar, Table } from 'components';
+import { Navbar, Table, TableColumn } from 'components';
 import { StyledMain } from './index.styles';
+import { httpClient, UserService } from '../api';
+import { User } from 'api/services/models';
 
-const columns = [
-  {
-    title: 'Name',
-    key: 'name',
-  },
-  {
-    title: 'Gender',
-    key: 'gender',
-  },
-  {
-    title: 'Birth',
-    key: 'birth',
-  },
-];
+interface HomeProps {
+  data: User[];
+}
 
-const data = [
-  {
-    name: 'José',
-    gender: 'male',
-    birth: '22/12/1998'
-  },
-  {
-    name: 'José',
-    gender: 'male',
-    birth: '22/12/1998'
-  },
-  {
-    name: 'José',
-    gender: 'male',
-    birth: '22/12/1998'
-  },
-  {
-    name: 'José',
-    gender: 'male',
-    birth: '22/12/1998'
-  },
-];
+export default function Home({ data }: HomeProps) {
+  const [users, setUsers] = useState<User[]>([]);
+  const columns: TableColumn[] = [
+    {
+      key: 'full_name',
+      title: 'Name',
+    },
+    {
+      key: 'gender',
+      title: 'Gender',
+    },
+    {
+      key: 'birth_date',
+      title: 'Birth',
+    },
+  ];
 
-export default function Home() {
+  useEffect(() => {
+    setUsers(data);
+  }, []);
+
   return (
     <div>
       <Head>
@@ -55,4 +44,16 @@ export default function Home() {
       </StyledMain>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const userService = new UserService(httpClient);
+  const response = await userService.getUsers({ results: 50 });
+  const data = response.results;
+
+  return {
+    props: {
+      data,
+    },
+  };
 }

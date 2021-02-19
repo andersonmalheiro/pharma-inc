@@ -1,7 +1,8 @@
 import React from 'react';
+import { randomString } from 'utils/random-id';
 import { StyledTable } from './table.styles';
 
-interface TableColumn {
+export interface TableColumn {
   title: string;
   key: string;
 }
@@ -24,10 +25,10 @@ export const Table = (props: TableProps) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((row) => (
-          <tr>
+        {data.map((row, index) => (
+          <tr key={index}>
             {columns.map((column) => (
-              <td>{row[column.key]}</td>
+              <td key={randomString()}>{row[column.key]}</td>
             ))}
             <td>
               <button>Details</button>
