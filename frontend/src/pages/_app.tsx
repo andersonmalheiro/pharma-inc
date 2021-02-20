@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { GlobalStyle } from '../styles/globals';
+import 'reactjs-popup/dist/index.css';
 
 function MyApp({ Component, pageProps }) {
   return (
