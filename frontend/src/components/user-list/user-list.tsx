@@ -16,6 +16,8 @@ export const UserList = () => {
   const [loading, setLoading] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User>(null);
   const [showModal, setShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentFilters, setCurrentFilters] = useState<UserFilters>({});
 
   const columns: TableColumn[] = [
     {
@@ -51,9 +53,14 @@ export const UserList = () => {
 
   const loadData = async (filters: UserFilters) => {
     try {
+      setCurrentFilters(filters);
       setLoading(true);
-      const { name, ...rest } = filters;
-      const response = await userService.getUsers({ ...rest, results: 50 });
+      const { name, page, ...rest } = filters;
+      const response = await userService.getUsers({
+        ...currentFilters,
+        page: currentPage,
+        results: 50,
+      });
       setLoading(false);
       if (response && response.results) {
         const { results } = response;
@@ -74,11 +81,27 @@ export const UserList = () => {
   };
 
   useEffect(() => {
-    loadData({ page: 1 });
+    loadData({});
   }, []);
+
+  useEffect(() => {
+    loadData(currentFilters);
+  }, [currentPage]);
 
   const onFilter = (filters: UserFilters) => {
     loadData(filters);
+  };
+
+  const onPaginate = (direction: 'left' | 'right') => {
+    if (direction === 'left') {
+      if (currentPage === 1) {
+        return;
+      } else {
+        setCurrentPage((prev) => prev - 1);
+      }
+    } else {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
 
   return (
@@ -91,6 +114,8 @@ export const UserList = () => {
         data={data}
         loading={loading}
         actions={tableActions}
+        onPaginate={onPaginate}
+        page={currentPage}
       />
       {selectedUser && (
         <UserModal data={selectedUser} open={showModal} close={closeModal} />

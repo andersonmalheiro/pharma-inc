@@ -78,5 +78,6 @@ export const Button = styled.button<ButtonProps>`
   &:hover {
     filter: brightness(1.05);
     transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   }
 `;

@@ -1,7 +1,15 @@
 import { Button, FlexColumn, FlexRow } from 'components/utils';
-import React from 'react';
+import React, { useState } from 'react';
 import { randomString } from 'utils/random-id';
-import { CustomRow, StyledTable } from './table.styles';
+import {
+  CustomRow,
+  StyledTable,
+  Paginator,
+  PaginatorIndicator,
+  PaginatorButton,
+  LoadingIcon,
+} from './table.styles';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 export interface TableColumn {
   title: string;
@@ -18,10 +26,13 @@ interface TableProps<T = any> {
   data: T[];
   loading: boolean;
   actions: TableAction[];
+  onPaginate: (direction: 'left' | 'right') => void;
+  page: number;
 }
 
 export const Table = (props: TableProps) => {
-  const { columns, data, loading, actions } = props;
+  const { columns, data, loading, actions, onPaginate, page } = props;
+
   return (
     <FlexColumn>
       <StyledTable>
@@ -67,6 +78,23 @@ export const Table = (props: TableProps) => {
           )}
         </tbody>
       </StyledTable>
+
+      <FlexRow aligment="center" justify="center">
+        <Paginator>
+          <PaginatorButton
+            disabled={page <= 1}
+            onClick={() => onPaginate('left')}
+          >
+            <MdKeyboardArrowLeft size={40} />
+          </PaginatorButton>
+          <PaginatorIndicator>
+            {loading ? <LoadingIcon /> : page}
+          </PaginatorIndicator>
+          <PaginatorButton onClick={() => onPaginate('right')}>
+            <MdKeyboardArrowRight size={40} />
+          </PaginatorButton>
+        </Paginator>
+      </FlexRow>
     </FlexColumn>
   );
 };
