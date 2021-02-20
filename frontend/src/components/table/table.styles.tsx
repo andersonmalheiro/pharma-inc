@@ -8,6 +8,20 @@ export const StyledTable = styled.table`
   background-color: #fff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 
+  tbody {
+    display: block;
+    max-height: 70vh;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+
+  thead, tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+
   & td,
   & th {
     text-align: center;
@@ -27,14 +41,8 @@ export const StyledTable = styled.table`
   }
 `;
 
-export const StyledTableCell = styled.th`
+export const CustomRow = styled.tr`
   text-align: center;
   padding: 10px;
-  border: 1px solid;
-`;
-
-export const StyledTD = styled.td`
-  text-align: center;
-  padding: 10px;
-  border: 1px solid;
+  height: 100px;
 `;
