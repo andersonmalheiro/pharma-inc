@@ -25,9 +25,10 @@ export const NavAvatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
-  width: 50px;
-  background: #8e8e8e;
-  border: 1px solid rgba(0,0,0,0.2);
+  height: 40px;
+  width: 40px;
+  background: #b4b4b4;
+  border: 2px solid rgba(0,0,0,0.2);
   border-radius: 50%;
+  cursor: pointer;
 `;
