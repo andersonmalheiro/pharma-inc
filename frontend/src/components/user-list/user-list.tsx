@@ -1,29 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { httpClient, UserFilters, UserService } from 'api';
+import { UserFilters } from 'api';
 import { User } from 'api/services/models';
 import { Filters } from 'components/filters';
 import { Table, TableAction, TableColumn } from 'components/table';
 import { FlexRow } from 'components/utils';
 import { Container } from './user-list.styles';
 import { UserModal } from 'components/user-modal';
+import {
+  userListSelector,
+  setQueryPage,
+  setShowModal,
+  setUser,
+  loadData,
+} from 'store/reducers/usersSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface UserListProps {
   pageNumber?: number;
 }
 
 export const UserList = (props: UserListProps) => {
+  const dispatch = useDispatch();
   const { pageNumber } = props;
-  const userService = new UserService(httpClient);
 
-  // state
-  const [users, setUsers] = useState<User[]>([]);
-  const [data, setData] = useState<User[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentFilters, setCurrentFilters] = useState<UserFilters>({});
+  const { data, loading, user, showModal, filters, queryPage } = useSelector(
+    userListSelector
+  );
 
+  // Method to show user modal
+  const showUserModal = (user: User) => {
+    dispatch(setUser(user));
+    dispatch(setShowModal(true));
+  };
+
+  // Method to close user modal
+  const closeUserModal = () => {
+    dispatch(setUser(undefined));
+    dispatch(setShowModal(false));
+  };
+
+  // Table columns configuration
   const columns: TableColumn[] = [
     {
       key: 'full_name',
@@ -39,77 +55,36 @@ export const UserList = (props: UserListProps) => {
     },
   ];
 
-  const showUserDetails = (user: User) => {
-    setSelectedUser(user);
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setSelectedUser(null);
-    setShowModal(false);
-  };
-
+  // Table actions configuration
   const tableActions: TableAction[] = [
     {
       text: 'Details',
-      onClick: showUserDetails,
+      onClick: showUserModal,
     },
   ];
 
-  const loadData = async (filters: UserFilters) => {
-    setCurrentFilters(filters);
-
-    try {
-      setLoading(true);
-      const { name } = filters;
-      const response = await userService.getUsers({
-        ...currentFilters,
-        page: currentPage,
-        results: 50,
-      });
-
-      setLoading(false);
-      if (response && response.results) {
-        const { results } = response;
-        setUsers(results);
-        if (name) {
-          const filtered = results.filter((user) => {
-            return user.full_name.toLowerCase().includes(name);
-          });
-          setData(JSON.parse(JSON.stringify(filtered)));
-        } else {
-          setData(JSON.parse(JSON.stringify(results)));
-        }
-      }
-    } catch (error) {
-      setLoading(false);
-      setUsers([]);
-    }
-  };
-
   useEffect(() => {
     if (pageNumber) {
-      setCurrentPage(pageNumber);
+      dispatch(setQueryPage(Number(pageNumber)));
+      dispatch(loadData({ ...filters }, Number(pageNumber)));
+    } else {
+      dispatch(setQueryPage(1));
+      dispatch(loadData({ ...filters }, 1));
     }
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
-    loadData(currentFilters);
-  }, [currentPage]);
-
-  const onFilter = (filters: UserFilters) => {
-    loadData(filters);
+  // Method to handle filters
+  const onFilter = (query: UserFilters) => {
+    dispatch(loadData(query));
   };
 
-  const onPaginate = (direction: 'left' | 'right') => {
-    if (direction === 'left') {
-      if (currentPage === 1) {
-        return;
-      } else {
-        setCurrentPage((prev) => prev - 1);
-      }
+  // Method to handle pagination
+  const onPaginate = (index: number) => {
+    if (index < 1) {
+      return;
     } else {
-      setCurrentPage((prev) => prev + 1);
+      dispatch(setQueryPage(index));
+      dispatch(loadData({ ...filters }, index));
     }
   };
 
@@ -124,10 +99,10 @@ export const UserList = (props: UserListProps) => {
         loading={loading}
         actions={tableActions}
         onPaginate={onPaginate}
-        page={currentPage}
+        page={queryPage}
       />
-      {selectedUser && (
-        <UserModal data={selectedUser} open={showModal} close={closeModal} />
+      {user && (
+        <UserModal data={user} open={showModal} close={closeUserModal} />
       )}
     </Container>
   );
