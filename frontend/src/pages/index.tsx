@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Navbar } from 'components';
 import { UserList } from 'components/user-list';
 import { StyledMain } from '../styles/index.styles';
 
-export default function Home() {
+export default function Home({ page }) {
   return (
     <div>
       <Head>
@@ -15,8 +15,13 @@ export default function Home() {
       <Navbar />
 
       <StyledMain>
-        <UserList />
+        <UserList pageNumber={page} />
       </StyledMain>
     </div>
   );
 }
+
+Home.getInitialProps = async (ctx) => {
+  const page = ctx.query.page;
+  return { page };
+};

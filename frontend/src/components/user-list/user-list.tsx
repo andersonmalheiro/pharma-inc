@@ -7,7 +7,12 @@ import { FlexRow } from 'components/utils';
 import { Container } from './user-list.styles';
 import { UserModal } from 'components/user-modal';
 
-export const UserList = () => {
+interface UserListProps {
+  pageNumber?: number;
+}
+
+export const UserList = (props: UserListProps) => {
+  const { pageNumber } = props;
   const userService = new UserService(httpClient);
 
   // state
@@ -52,15 +57,17 @@ export const UserList = () => {
   ];
 
   const loadData = async (filters: UserFilters) => {
+    setCurrentFilters(filters);
+
     try {
-      setCurrentFilters(filters);
       setLoading(true);
-      const { name, page, ...rest } = filters;
+      const { name } = filters;
       const response = await userService.getUsers({
         ...currentFilters,
         page: currentPage,
         results: 50,
       });
+
       setLoading(false);
       if (response && response.results) {
         const { results } = response;
@@ -81,7 +88,9 @@ export const UserList = () => {
   };
 
   useEffect(() => {
-    loadData({});
+    if (pageNumber) {
+      setCurrentPage(pageNumber);
+    }
   }, []);
 
   useEffect(() => {
