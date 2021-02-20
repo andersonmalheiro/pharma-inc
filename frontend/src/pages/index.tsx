@@ -4,7 +4,11 @@ import { Navbar } from 'components';
 import { UserList } from 'components/user-list';
 import { StyledMain } from '../styles/index.styles';
 
-export default function Home({ page }) {
+interface HomeProps {
+  page?: number;
+}
+
+export default function Home({ page }: HomeProps) {
   return (
     <div>
       <Head>

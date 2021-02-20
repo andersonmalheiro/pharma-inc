@@ -24,10 +24,10 @@ export interface TableAction {
 interface TableProps<T = any> {
   columns: TableColumn[];
   data: T[];
-  loading: boolean;
-  actions: TableAction[];
-  onPaginate: (direction: 'left' | 'right') => void;
-  page: number;
+  loading?: boolean;
+  actions?: TableAction[];
+  onPaginate?: (direction: 'left' | 'right') => void;
+  page?: number;
 }
 
 export const Table = (props: TableProps) => {
@@ -47,7 +47,9 @@ export const Table = (props: TableProps) => {
         <tbody>
           {loading ? (
             <CustomRow>
-              <td colSpan={columns.length + 1}>Loading...</td>
+              <td colSpan={columns.length + 1} data-testid="loading_row">
+                Loading...
+              </td>
             </CustomRow>
           ) : !loading && data && data.length ? (
             data.map((row, index) => (
@@ -55,20 +57,23 @@ export const Table = (props: TableProps) => {
                 {columns.map((column) => (
                   <td key={randomString()}>{row[column.key]}</td>
                 ))}
-                <td>
-                  <FlexRow aligment="center" justify="center">
-                    {actions.map((action) => (
-                      <Button
-                        key={action.text}
-                        onClick={() => action.onClick(row)}
-                        round="rounded"
-                        styling="primary"
-                      >
-                        {action.text}
-                      </Button>
-                    ))}
-                  </FlexRow>
-                </td>
+                {actions && (
+                  <td>
+                    <FlexRow aligment="center" justify="center">
+                      {actions.map((action) => (
+                        <Button
+                          key={action.text}
+                          onClick={() => action.onClick(row)}
+                          round="rounded"
+                          styling="primary"
+                          data-testid={action.text}
+                        >
+                          {action.text}
+                        </Button>
+                      ))}
+                    </FlexRow>
+                  </td>
+                )}
               </tr>
             ))
           ) : (
@@ -82,15 +87,19 @@ export const Table = (props: TableProps) => {
       <FlexRow aligment="center" justify="center">
         <Paginator>
           <PaginatorButton
+            data-testid="paginate_left"
             disabled={page <= 1}
             onClick={() => onPaginate('left')}
           >
             <MdKeyboardArrowLeft size={40} />
           </PaginatorButton>
           <PaginatorIndicator>
-            {loading ? <LoadingIcon /> : page}
+            {loading ? <LoadingIcon data-testid="loading_icon" /> : page}
           </PaginatorIndicator>
-          <PaginatorButton onClick={() => onPaginate('right')}>
+          <PaginatorButton
+            data-testid="paginate_right"
+            onClick={() => onPaginate('right')}
+          >
             <MdKeyboardArrowRight size={40} />
           </PaginatorButton>
         </Paginator>

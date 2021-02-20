@@ -7,7 +7,7 @@ export const Navbar = () => {
     <Nav>
       <FlexRow aligment="center">
         <NavLogo src={'/assets/pharmacy.svg'} />
-        <NavTitle>Pharma Inc</NavTitle>
+        <NavTitle>Pharma Inc.</NavTitle>
       </FlexRow>
 
       <NavAvatar />
