@@ -5,7 +5,6 @@ import { dateFormatter } from 'utils/date-format';
 export interface UserFilters {
   gender?: 'male' | 'female' | undefined;
   nat?: string;
-  page?: number;
   results?: number;
   inc?: string[];
   exc?: string[];
@@ -17,11 +16,12 @@ export class UserService {
   constructor(private httpClient: AxiosInstance) {}
 
   public async getUsers(
-    filters: UserFilters
+    filters: UserFilters,
+    page?: number
   ): Promise<ResponseModel<User> | undefined> {
     try {
       const response = await this.httpClient.get<ResponseModel<User>>('/', {
-        params: filters,
+        params: { ...filters, page },
       });
 
       if (response && response.data) {
