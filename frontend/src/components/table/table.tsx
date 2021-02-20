@@ -26,7 +26,7 @@ interface TableProps<T = any> {
   data: T[];
   loading?: boolean;
   actions?: TableAction[];
-  onPaginate?: (direction: 'left' | 'right') => void;
+  onPaginate?: (...args: any[]) => void;
   page?: number;
 }
 
@@ -89,7 +89,7 @@ export const Table = (props: TableProps) => {
           <PaginatorButton
             data-testid="paginate_left"
             disabled={page <= 1}
-            onClick={() => onPaginate('left')}
+            onClick={() => onPaginate(page - 1)}
           >
             <MdKeyboardArrowLeft size={40} />
           </PaginatorButton>
@@ -98,7 +98,7 @@ export const Table = (props: TableProps) => {
           </PaginatorIndicator>
           <PaginatorButton
             data-testid="paginate_right"
-            onClick={() => onPaginate('right')}
+            onClick={() => onPaginate(page + 1)}
           >
             <MdKeyboardArrowRight size={40} />
           </PaginatorButton>
