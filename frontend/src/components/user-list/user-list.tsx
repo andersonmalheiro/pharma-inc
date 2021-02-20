@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { httpClient, UserFilters, UserService } from 'api';
 import { User } from 'api/services/models';
 import { Filters } from 'components/filters';
-import { Table, TableColumn } from 'components/table';
+import { Table, TableAction, TableColumn } from 'components/table';
 import { FlexRow } from 'components/utils';
 import { Container } from './user-list.styles';
+import { UserModal } from 'components/user-modal';
 
 export const UserList = () => {
   const userService = new UserService(httpClient);
@@ -13,6 +14,8 @@ export const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [data, setData] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const columns: TableColumn[] = [
     {
@@ -26,6 +29,23 @@ export const UserList = () => {
     {
       key: 'birth_date',
       title: 'Birth',
+    },
+  ];
+
+  const showUserDetails = (user: User) => {
+    setSelectedUser(user);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setSelectedUser(null);
+    setShowModal(false);
+  };
+
+  const tableActions: TableAction[] = [
+    {
+      text: 'Details',
+      onClick: showUserDetails,
     },
   ];
 
@@ -66,7 +86,15 @@ export const UserList = () => {
       <FlexRow width="100%">
         <Filters onFilter={onFilter} />
       </FlexRow>
-      <Table columns={columns} data={data} loading={loading} />
+      <Table
+        columns={columns}
+        data={data}
+        loading={loading}
+        actions={tableActions}
+      />
+      {selectedUser && (
+        <UserModal data={selectedUser} open={showModal} close={closeModal} />
+      )}
     </Container>
   );
 };

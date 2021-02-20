@@ -10,17 +10,17 @@ export const StyledTable = styled.table`
 
   tbody {
     display: block;
-    max-height: 70vh;
+    max-height: 55vh;
     overflow: hidden;
     overflow-y: auto;
   }
 
-  thead, tr {
+  thead,
+  tr {
     display: table;
     width: 100%;
     table-layout: fixed;
   }
-
 
   & td,
   & th {
