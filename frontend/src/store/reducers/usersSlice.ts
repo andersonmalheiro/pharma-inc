@@ -4,7 +4,7 @@ import { User } from 'api/services/models';
 
 const userService = new UserService(httpClient);
 
-interface UserListState {
+export interface UserListState {
   data: User[];
   filters: UserFilters;
   loading: boolean;
