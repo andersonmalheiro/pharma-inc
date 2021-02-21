@@ -6,6 +6,7 @@ lint:
   image: node:12.20.2
   stage: lint
   before_script:
+    - ls
     - cd frontent/
     - npm install
   script:
