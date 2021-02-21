@@ -8,6 +8,8 @@ Projeto criado utilizando:
 
 - Next JS;
 - Styled components;
+- Redux Toolkit;
+- Google Typescript styleguide | Lint;
 - Testes com Jest e React Testing Library;
 - Docker.
 
