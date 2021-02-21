@@ -1,5 +1,5 @@
 import { User } from 'api/services/models';
-import { FlexColumn, FlexRow } from 'components/utils';
+import { FlexColumn } from 'components/utils';
 import React from 'react';
 import { StyledPopup, Avatar, InfoRow, CloseButton } from './user-modal.styles';
 

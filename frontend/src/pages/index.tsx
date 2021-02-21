@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import { Navbar } from 'components';
 import { UserList } from 'components/user-list';

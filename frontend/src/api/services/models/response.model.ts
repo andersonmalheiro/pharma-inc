@@ -1,5 +1,3 @@
-import { User } from './user.model';
-
 interface Info {
   seed: string;
   results: number;

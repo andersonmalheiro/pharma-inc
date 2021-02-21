@@ -90,7 +90,7 @@ describe('Table component', () => {
   });
 
   it('should disable left pagination button when page index is 1', () => {
-    let page = 1;
+    const page = 1;
 
     act(() => {
       render(
@@ -111,7 +111,7 @@ describe('Table component', () => {
   });
 
   it('should enable left pagination button when page index is more than 1', () => {
-    let page = 2;
+    const page = 2;
 
     act(() => {
       render(

@@ -35,7 +35,9 @@ export class UserService {
         return response.data;
       }
     } catch (error) {
-      throw error;
+      return error;
     }
+
+    return undefined;
   }
 }

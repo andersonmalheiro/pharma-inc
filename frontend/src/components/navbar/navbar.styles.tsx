@@ -28,7 +28,7 @@ export const NavAvatar = styled.div`
   height: 40px;
   width: 40px;
   background: #b4b4b4;
-  border: 2px solid rgba(0,0,0,0.2);
+  border: 2px solid rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   cursor: pointer;
 `;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { UserFilters } from 'api';
 import { User } from 'api/services/models';
 import { Filters } from 'components/filters';

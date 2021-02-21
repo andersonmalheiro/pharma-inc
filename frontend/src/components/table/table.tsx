@@ -1,5 +1,5 @@
 import { Button, FlexColumn, FlexRow } from 'components/utils';
-import React, { useState } from 'react';
+import React from 'react';
 import { randomString } from 'utils/random-id';
 import {
   CustomRow,
