@@ -133,17 +133,8 @@ describe('Table component', () => {
   it('should increase page index on paginate', () => {
     let page = 1;
 
-    const onPaginate = (direction: 'left' | 'right') => {
-      console.log('direction :>> ', direction);
-      if (direction === 'left') {
-        if (page === 1) {
-          return;
-        } else {
-          page -= 1;
-        }
-      } else {
-        page += 1;
-      }
+    const onPaginate = (index: number) => {
+      page = index;
     };
 
     act(() => {
