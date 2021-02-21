@@ -1,0 +1,25 @@
+stages:
+  - lint
+  - test
+  - build
+lint:
+  image: node:12.20.2
+  stage: lint
+  before_script:
+    - npm install
+  script:
+    - yarn lint
+unit_tests:
+  image: node:12.20.2
+  stage: test
+  before_script:
+    - yarn install
+  script:
+    - yarn test
+react_build:
+  image: node:12.20.2
+  stage: build
+  before_script:
+    - yarn install
+  script:
+    - yarn build
