@@ -1,7 +1,16 @@
 stages:
+  - compile
   - lint
   - test
   - build
+compile:
+  image: node:12.20.2
+  stage: compile
+  before_script:
+    - cd frontend/
+    - npm install
+  script:
+    - yarn prepare
 lint:
   image: node:12.20.2
   stage: lint
