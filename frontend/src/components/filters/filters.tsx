@@ -63,6 +63,7 @@ export const Filters = (props: FilterProps) => {
           <Input
             name="name"
             id="name"
+            data-testid="name"
             value={filters?.name}
             placeholder="Search by name..."
             onChange={handleFilterChange}
@@ -73,6 +74,7 @@ export const Filters = (props: FilterProps) => {
           <Select
             name="gender"
             id="gender"
+            data-testid="gender"
             value={filters?.gender}
             onChange={handleFilterChange}
           >
@@ -86,6 +88,7 @@ export const Filters = (props: FilterProps) => {
           <Select
             name="nat"
             id="nat"
+            data-testid="nat"
             value={filters?.nat}
             onChange={handleFilterChange}
           >
@@ -99,10 +102,20 @@ export const Filters = (props: FilterProps) => {
         </FlexColumn>
       </Container>
       <FlexRow aligment="center" justify="center" padding="1em" gap="1em">
-        <Button onClick={clear} styling="default">
+        <Button
+          onClick={clear}
+          styling="default"
+          id="clear"
+          data-testid="clear"
+        >
           Clear
         </Button>
-        <Button onClick={() => onFilter(filters)} styling="primary">
+        <Button
+          onClick={() => onFilter(filters)}
+          styling="primary"
+          data-testid="submit"
+          id="submit"
+        >
           Filter
         </Button>
       </FlexRow>

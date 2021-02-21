@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { GlobalStyle } from '../styles/globals';
 import 'reactjs-popup/dist/index.css';
 import { Provider } from 'react-redux';
-import { store } from 'store/store';
+import { store } from 'store';
 
 function MyApp({ Component, pageProps }) {
   return (
