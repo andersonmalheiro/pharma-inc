@@ -6,7 +6,7 @@ lint:
   image: node:12.20.2
   stage: lint
   before_script:
-    - cd frontent
+    - cd frontent/
     - npm install
   script:
     - yarn lint
@@ -14,7 +14,7 @@ unit_tests:
   image: node:12.20.2
   stage: test
   before_script:
-    - cd frontent
+    - cd frontent/
     - yarn install
   script:
     - yarn test
@@ -22,7 +22,7 @@ react_build:
   image: node:12.20.2
   stage: build
   before_script:
-    - cd frontent
+    - cd frontent/
     - yarn install
   script:
     - yarn build
