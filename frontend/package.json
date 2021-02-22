@@ -13,9 +13,9 @@
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
-    "prepare": "yarn run compile",
-    "pretest": "yarn run compile",
-    "posttest": "yarn run lint"
+    "prepare": "tsc",
+    "pretest": "tsc",
+    "posttest": "gts lint"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
