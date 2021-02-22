@@ -29,7 +29,7 @@ interface FilterProps {
 
 const DEFAULT_VALUE = {
   name: '',
-  gender: undefined,
+  gender: '',
   nat: '',
 };
 

@@ -74,7 +74,7 @@ export const loadData = (filters: UserFilters, page?: number) => {
         {
           ...rest,
           results: 50,
-          seed: 'pharmainc',
+          // seed: 'pharmainc',
         },
         page
       );

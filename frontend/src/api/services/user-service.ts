@@ -3,7 +3,7 @@ import { User, ResponseModel } from './models';
 import { dateFormatter } from 'utils/date-format';
 
 export interface UserFilters {
-  gender?: 'male' | 'female' | undefined;
+  gender?: string;
   nat?: string;
   results?: number;
   inc?: string[];
