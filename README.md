@@ -21,6 +21,13 @@ O projeto se encontra na pasta `frontend`. As próximas instruções levam em co
 cd frontend
 ```
 
+Instale as dependências:
+```bash
+npm install
+# ou
+yarn
+```
+
 Para executar o projeto em modo de desenvolvimento, execute o seguinte comando:
 
 ```bash
